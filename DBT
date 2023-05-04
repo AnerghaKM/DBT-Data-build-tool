@@ -1,0 +1,43 @@
+DBT
+
+choose a warehouse 
+configure environment
+test connection
+develop
+
+dbt_project.yml --> covers configuration settings,name of the project.This file is necessary for DBT to run.
+
+models and testing are the other main folders.
+
+Linage is available only for buildable resource types like models,snapshots & seeds.
+Not available for .yml,macros,markdown etc
+
+-->DBT run
+http://localhost:8888/edit/1Ann%20Projects/Snowflake%20dtb/DBT#
+    executes all files in dbt project
+    
+Modelling
+ Model is essentially a select statement 
+ Models are defined .sql files
+ Typically in model directly
+ 
+ Seeds are the local files that we upload to data warehouse from dbt
+ Seeds are the small csv files that reside in seeds folder
+ Source is an abstraction layer, on the top of your input table
+ Source freshness can be checked automatically
+ add in source.yml file under models folder
+ freshness:
+          warn_after: {count: 1, period: hour}
+          error_after: {count: 24, period: hour}
+ 
+ dbt run --> executes compiled sql model files against the current target database. 
+ dbt run --full-refresh   --> Making a full-refresh:
+ dbt seed --> seed file gets copied to snowflake
+ 
+ Type 2 slowly changing dimensions - add new role
+ 
+ SNAPSHOTS
+  resides in snapshots folder
+  -Timestamp : unique key and an updated_at field is defined on source model.These colns are used to determine changes.
+  -check : any change in a set of column will be picked as an update
+  
